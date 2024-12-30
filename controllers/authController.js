@@ -27,8 +27,6 @@ export const register = async (req, res, next) => {
             return res.status(400).send({ message: "Le rôle doit être 'USER' ou 'ADMIN'" })
         }
 
-        console.log("Mot de passe reçu :", password);
-
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>~+=_-])[A-Za-z\d!@#$%^&*(),.?":{}|<>~+=_-]{8,100}$/
         if (!passwordRegex.test(password)) {
             return res.status(400).send({ message: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre, un caractère spécial et être entre 8 et 100 caractères" });
