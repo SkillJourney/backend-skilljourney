@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
             return res.status(400).send({ message: "L'email ne doit pas dépasser 100 caractères" })
         }
 
-        const validRoles = ["USER", "ADMIN"]
+        const validRoles = ["USER", "ADMIN", "COMPANY"]
         if (!validRoles.includes(role)) {
             return res.status(400).send({ message: "Le rôle doit être 'USER' ou 'ADMIN'" })
         }
