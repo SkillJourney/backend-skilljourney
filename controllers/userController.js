@@ -117,11 +117,3 @@ export const deleteUser = async (req, res, next) => {
         next(e)
     }
 }
-
-export const getUserByParams = async (req, res, next) => {
-    try {
-        res.send("Get user by params")
-    } catch (e) {
-        next(e)
-    }
-}
