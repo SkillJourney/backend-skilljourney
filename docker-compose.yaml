@@ -11,28 +11,6 @@ services:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - skilljourney-network
-
-  backend:
-    build:
-      dockerfile: Dockerfile
-    container_name: skilljourney_backend
-    environment:
-      DB_HOST: postgres
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_NAME: ${POSTGRES_DB}
-    ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
-    depends_on:
-      - postgres
-    networks:
-      - skilljourney-network
 
 volumes:
   postgres_data:
-
-networks:
-  skilljourney-network:
-    driver: bridge
