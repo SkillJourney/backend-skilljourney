@@ -16,9 +16,8 @@ services:
 
   backend:
     build:
-      context: ./backend
       dockerfile: Dockerfile
-    container_name: library_backend
+    container_name: skilljourney_backend
     environment:
       DB_HOST: postgres
       DB_USER: ${POSTGRES_USER}
