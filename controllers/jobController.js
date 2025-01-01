@@ -1,10 +1,11 @@
 import Job from "../models/jobModel.js"
+import User from "../models/userModel.js"
 
 export const createJob = async (req, res, next) => {
     try {
-        const { title, salary, description, company, email } = req.body
+        const { title, salary, description, location } = req.body
 
-        if (!title || !salary || !description || !company || !email) {
+        if (!title || !salary || !description || !location) {
             return res.status(400).json({ message: "Tous les champs sont obligatoires" })
         }
 
@@ -20,19 +21,11 @@ export const createJob = async (req, res, next) => {
             return res.status(400).json({ message: "La description ne doit pas dépasser 1000 caractères" });
         }
 
-        if (company.length > 100) {
-            return res.status(400).json({ message: "Le nom de l'entreprise ne doit pas dépasser 100 caractères" });
+        if (location.length > 100) {
+            return res.status(400).json({ message: "La localisation ne doit pas dépasser 100 caractères" })
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-            return res.status(400).send({ message: "L'email est invalide" })
-        }
-        if (email.length > 100) {
-            return res.status(400).json({ message: "L'email ne doit pas dépasser 100 caractères" });
-        }
-
-        const existingUserId = await User.findByPk(userId)
+        const existingUserId = await User.findByPk(req.user.id)
 
         if (!existingUserId) {
             return res.status(404).send({ message: "Utilisateur non trouvé" })
@@ -42,12 +35,19 @@ export const createJob = async (req, res, next) => {
             title,
             salary,
             description,
-            company,
-            email,
-            userId: req.user.id
+            location,
+            userId: req.user.id,
         })
 
-        res.status(201).json({ message: 'Emploi crée avec succès', job })
+        const jobWithUser = await Job.findByPk(job.id, {
+            include: {
+                model: User,
+                as: "user",
+                attributes: ["username", "email", "avatar"]
+            }
+        });
+
+        res.status(201).json({ message: 'Emploi crée avec succès', job: jobWithUser })
     } catch (e) {
         next(e)
     }
@@ -109,9 +109,9 @@ export const updateJob = async (req, res, next) => {
             return res.status(404).send({ message: "Emploi non trouvé" })
         }
 
-        const { title, salary, description, company, email } = req.body
+        const { title, salary, description, location } = req.body
 
-        if (!title || !salary || !description || !company || !email) {
+        if (!title || !salary || !description || !location) {
             return res.status(400).json({ message: "Tous les champs sont obligatoires" })
         }
 
@@ -127,24 +127,15 @@ export const updateJob = async (req, res, next) => {
             return res.status(400).json({ message: "La description ne doit pas dépasser 1000 caractères" });
         }
 
-        if (company.length > 100) {
-            return res.status(400).json({ message: "Le nom de l'entreprise ne doit pas dépasser 100 caractères" });
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-            return res.status(400).send({ message: "L'email est invalide" })
-        }
-        if (email.length > 100) {
-            return res.status(400).json({ message: "L'email ne doit pas dépasser 100 caractères" });
+        if (location.length > 100) {
+            return res.status(400).json({ message: "La localisation ne doit pas dépasser 100 caractères" });
         }
 
         const updatedJob = await job.update({
             title,
             salary,
             description,
-            company,
-            email,
+            location
         })
 
         res.status(200).json({ message: 'Emploi mis à jour avec succès', updatedJob })

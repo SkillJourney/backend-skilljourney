@@ -24,19 +24,11 @@ const Job = sequalize.define("Job", {
             len: [1, 1000],
         }
     },
-    company: {
+    location: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
             len: [1, 100],
-        }
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [1, 100],
-            isEmail: true,
         }
     },
     userId: {

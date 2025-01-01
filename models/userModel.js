@@ -2,14 +2,7 @@ import sequelize from "../configurations/dbConfiguration.js";
 import { DataTypes } from "sequelize";
 
 const User = sequelize.define("User", {
-    firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [1, 20],
-        }
-    },
-    lastName: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -35,9 +28,7 @@ const User = sequelize.define("User", {
     role: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            isIn: ["USER", "ADMIN", "COMPANY"],
-        }
+        defaultValue: "USER"
     },
     avatar: {
         type: DataTypes.STRING,

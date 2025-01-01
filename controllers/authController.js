@@ -4,14 +4,14 @@ import jwt from 'jsonwebtoken'
 
 export const register = async (req, res, next) => {
     try {
-        const { firstName, lastName, password, role, avatar, email } = req.body;
+        const { username, password, role, avatar, email } = req.body;
 
-        if (!firstName || !lastName || !password || !role || !email) {
+        if (!username || !password || !role || !email) {
             return res.status(400).send({ message: "Tous les champs obligatoires doivent être remplis" })
         }
 
-        if (firstName.length > 20 || lastName.length > 20) {
-            return res.status(400).send({ message: "Les prénoms et noms ne doivent pas dépasser 20 caractères" })
+        if (username.length > 20) {
+            return res.status(400).send({ message: "Le nom ne doit pas dépasser 20 caractères" })
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -24,7 +24,7 @@ export const register = async (req, res, next) => {
 
         const validRoles = ["USER", "ADMIN", "COMPANY"]
         if (!validRoles.includes(role)) {
-            return res.status(400).send({ message: "Le rôle doit être 'USER' ou 'ADMIN'" })
+            return res.status(400).send({ message: "Le rôle doit être 'USER' ou 'ADMIN' ou 'COMPANY" })
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>~+=_-])[A-Za-z\d!@#$%^&*(),.?":{}|<>~+=_-]{8,100}$/
@@ -41,8 +41,7 @@ export const register = async (req, res, next) => {
         const hashedPassword = bcryptjs.hashSync(password, 10)
 
         const user = await User.create({
-            firstName,
-            lastName,
+            username,
             email,
             password: hashedPassword,
             role,
@@ -80,6 +79,7 @@ export const login = async (req, res, next) => {
                 id: user.id,
                 email: user.email,
                 role: user.role,
+                username: user.username
             },
             process.env.JWT_SECRET,
             { expiresIn: "2h" }
@@ -89,7 +89,8 @@ export const login = async (req, res, next) => {
             message: "Connexion réussie",
             userId: user.id,
             userRole: user.role,
-            userEmail: user.email,
+            useremail: user.email,
+            username: user.username,
             token,
         })
 

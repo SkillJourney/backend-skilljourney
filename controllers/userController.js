@@ -34,18 +34,14 @@ export const getUserById = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
     try {
         const userId = req.params.id
-        const { firstName, lastName, email, avatar, password } = req.body
+        const { username, email, avatar, password } = req.body
 
-        if (!firstName || !lastName || !password || !email) {
+        if (!username || !password || !email) {
             return res.status(400).send({ message: "Tous les champs obligatoires doivent être remplis" })
         }
 
-        if (firstName.length > 20) {
-            return res.status(400).json({ message: "Le prénom ne doit pas dépasser 20 caractères" });
-        }
-
-        if (lastName.length > 20) {
-            return res.status(400).json({ message: "Le nom de famille ne doit pas dépasser 20 caractères" });
+        if (username.length > 20) {
+            return res.status(400).json({ message: "Le nom ne doit pas dépasser 20 caractères" });
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -86,8 +82,7 @@ export const updateUser = async (req, res, next) => {
             existingUserId.avatar = avatar;
         }
 
-        existingUserId.firstName = firstName
-        existingUserId.lastName = lastName
+        existingUserId.username = username
         existingUserId.email = email
 
         await existingUserId.save();
