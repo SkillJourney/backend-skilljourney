@@ -31,6 +31,16 @@
 				{
 					"name": "getAllUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -50,6 +60,16 @@
 				{
 					"name": "getUserById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -70,10 +90,20 @@
 				{
 					"name": "deleteUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/users/delete-user/4",
+							"raw": "{{url}}/api/users/delete-user/2",
 							"host": [
 								"{{url}}"
 							],
@@ -81,7 +111,7 @@
 								"api",
 								"users",
 								"delete-user",
-								"4"
+								"2"
 							]
 						}
 					},
@@ -104,7 +134,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.dod@email.com\",\n    \"password\": \"$2a$10$.AV8F12GV1ZMN0MmoPxvQeLS.BHSFKRys0pd56vdWZd/4I9WC93ni\",\n    \"avatar\": \"http://example.com/avatar.jpg\"\n}",
+							"raw": "{\n    \"username\": \"update postman\",\n    \"email\": \"john.dod@email.com\",\n    \"password\": \"$2a$10$AKHArQDtjjP5yhbH00M1W..9Z.P8pWk1GhSv/a7sIkSU/DpEzLKGC\",\n    \"avatar\": \"http://example.com/avatar.jpg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -112,7 +142,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/users/update-user/8",
+							"raw": "{{url}}/api/users/update-user/1",
 							"host": [
 								"{{url}}"
 							],
@@ -120,7 +150,7 @@
 								"api",
 								"users",
 								"update-user",
-								"8"
+								"1"
 							]
 						}
 					},
@@ -138,7 +168,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Maxence\",\n    \"lastName\": \"Bonnici\",\n    \"password\": \"MXE1713@bon+2\",\n    \"role\": \"USER\",\n    \"avatar\": null,\n    \"email\": \"maxence.bonnici2002@gmail.com\"\n}",
+							"raw": "{\n    \"username\":\"Maxence Bonnici\",\n    \"password\": \"MXE1713@bon+2\",\n    \"role\": \"ADMIN\",\n    \"avatar\": null,\n    \"email\": \"maxence.bonnici2002@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -209,7 +239,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\":\"Postman test job\",\n    \"salary\":3000,\n    \"description\": \"description\",\n    \"company\":\"Postman Corp\",\n    \"email\": \"email@email.com\"\n}",
+							"raw": "{\n    \"title\":\"Postman test job\",\n    \"salary\":3000,\n    \"description\": \"description\",\n    \"location\": \"Aix en provence\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
