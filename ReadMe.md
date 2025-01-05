@@ -5,7 +5,7 @@
 - You need Docker and Node
 - Clone the project
 - Start Postgres database : `docker compose up -d`
-- Start API : `node server.js` ✅
+- Start API : `npm install && node server.js` ✅
 
 ## Test
 
